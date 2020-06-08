@@ -1,0 +1,60 @@
+// CRUD Excersise 1 
+
+Both gives same result Question.2
+
+db.product_catalog.find(
+  {
+    "categories.sub": "washing machine",
+    price: {$gte: 20000, $lte: 30000
+    }
+}
+);
+
+db.product_catalog.find(
+  {$and: [
+        {
+            "categories.sub": "washing machine"
+        },
+        {price: {$gte: 20000, $lte: 30000
+            }
+        }
+    ]
+}
+).sort({price: 1
+}).pretty();; // price=1 means ascending order and -1 means descending order
+
+3)Retrieve the details of mobiles whose manufacturer is either 'apple' or 'samsung' and its price should be within 60000
+db.product_catalog.find(
+  {$or: [
+        {manufacturer: "apple"
+        },
+        {manufacturer: "samsung"
+        }
+    ],
+    price: {$lte: 60000
+    }
+}
+);
+
+4)
+db.product_catalog.find({publisher: {$regex:/^O'Reilly/
+    }
+});
+
+2.1)
+db.product_catalog.replaceOne({
+    manufacturer: "Mi"
+},
+{
+    "prodname": "Xiaomi Mi Max Prime",
+    "manufacturer": "Xiaomi", price: 20000
+});
+
+2.2) using sort as done abv
+
+2.3) 
+db.product_catalog.find().skip(2).limit(3).pretty()
+
+2.4)
+db.product_catalog.find({manufacturer: "apple"
+}).count();
