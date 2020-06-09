@@ -71,24 +71,32 @@ db.employee.aggregate([
           total: {$sum: "$salary"
             }
         }
+    },
+    {
+      $project: {_id: 0,loc: "$_id.loc",total: 1
+        }
     }
 ])
 
 2)
-db.employee.aggregate(
-  {
-    $group: {
-      _id: {loc: "$loc"
-        },
-      count: {
-        $sum: 1
+db.employee.aggregate([ //remember this array opening and closing at the bottom
+    {
+      $group: {
+        _id: {loc: "$loc"
+            },
+        count: {
+          $sum: 1
+            }
+        }
+    },
+    {
+      $match: {
+        count: {$gt: 1
+            }
+        }
+    },
+    {
+      $project: {_id: 0,loc: "$_id.loc",count: 1
         }
     }
-},
-{
-    $match: {
-      count: {$gt: 1
-        }
-    }
-}
-)
+])
