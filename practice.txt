@@ -58,3 +58,37 @@ db.product_catalog.find().skip(2).limit(3).pretty()
 2.4)
 db.product_catalog.find({manufacturer: "apple"
 }).count();
+
+
+
+// Excersise 2 
+1)
+db.employee.aggregate([
+    {
+      $group: {
+          _id: {loc: "$loc"
+            },
+          total: {$sum: "$salary"
+            }
+        }
+    }
+])
+
+2)
+db.employee.aggregate(
+  {
+    $group: {
+      _id: {loc: "$loc"
+        },
+      count: {
+        $sum: 1
+        }
+    }
+},
+{
+    $match: {
+      count: {$gt: 1
+        }
+    }
+}
+)
