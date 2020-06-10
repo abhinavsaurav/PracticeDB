@@ -100,3 +100,66 @@ db.employee.aggregate([ //remember this array opening and closing at the bottom
         }
     }
 ])
+
+//Helpful link for conversion chart
+//https://docs.mongodb.com/manual/reference/sql-aggregation-comparison/
+/** 
+    Excersise 4(Query and projection) 
+                                        */
+1.i) Added the $exists just to practice and see otherwise it returns full collection without shroff document
+
+-- Also $not -> Remember that the $not operator only affects other operators
+                 and cannot check fields and documents independently. 
+                 So, use the $not operator for logical disjunctions 
+                 and the $ne operator to test the contents of fields directly.
+
+db.product_catalog.find(
+    {$nor: [
+        {publisher: "Shroff"
+        }
+    ],publisher: {$exists: true
+    }
+}
+)
+
+Alternate: and simple use $ne:-
+
+db.product_catalog.find(
+  {publisher: {$ne: "Shroff"
+    }
+}
+)
+
+1.ii)
+db.product_catalog.find(
+  {$or: [
+        {price: {$gte: 1000,$lte: 20000
+            }
+        },
+        {manufacturer: {$in: ['nike','reebok'
+                ]
+            }
+        }
+    ]
+}
+)
+
+2)
+db.product_catalog.find(
+  {
+    "categories.main": "shoes",colors: {$size: 2
+    }
+}
+);
+
+3) //check once again
+
+db.product_catalog.remove(
+  {
+    "categories.main": "books",$nor: [
+        {ISBN: 2323232, ISBN: 1979891
+        }
+    ]
+}
+  );
+
