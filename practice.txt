@@ -163,3 +163,24 @@ db.product_catalog.remove(
 }
   );
 
+##################################
+--------Update Excersise:---------
+##################################
+
+1)
+db.product_catalog.updateMany({colors:"black"},{
+$set: {
+  "colors.$":"jet black"
+}})
+
+
+2)
+db.product_catalog.update({prodname:"iphone 7"},{$set:{"date_of_launch":new Date()}})
+
+3)
+db.product_catalog.update({},{$rename:{"prodname":"productname"}})
+
+4)
+db.product_catalog.updateMany( {manufacturer:"nike"}, {$push:{colors:{$each:["red","purple"],$position:0} } } )
+
+
