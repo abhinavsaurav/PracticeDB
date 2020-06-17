@@ -183,4 +183,70 @@ db.product_catalog.update({},{$rename:{"prodname":"productname"}})
 4)
 db.product_catalog.updateMany( {manufacturer:"nike"}, {$push:{colors:{$each:["red","purple"],$position:0} } } )
 
+#####################################
+---------Integrated Assignment:------
+#####################################
+
+2)-- Date inserted for checking the working data are old
+
+db.contracts.find({enddt:{$gt:new Date("2018-02-14T00:00:00Z")}})
+
+3)
+db.roles.find({rolename:"audit"},{"methods_entitled":1})
+
+4)
+db.users.find({username:/^telecom/})
+
+5)
+db.installedbase.aggregate([
+  {
+    /**
+     * _id: The id of the group.
+     * fieldN: The first field name.
+     */
+    $group: {
+      _id: {product:"$product"},
+      count1:{
+        $sum: 1
+      }
+    }},{
+    $sort: {
+      count1: -1
+    }},{
+    $limit:1
+    
+  }
+])
+
+6)
+
+7)
+db.customers.update(
+  {custname:"bigdatasoft"},
+  {
+    $set:{
+      address:{
+        city: "BrisbaneIL", country: "Australia"}
+      }
+  }
+  )
+db.customers.find({custname:"bigdatasoft"})
+
+
+8)
+db.roles.aggregate(
+  [
+    {
+    $unwind:"$methods_entitled"
+    },
+  
+  {$project: {_id:0, methods_entitled:1}}
+  ,{
+    $out:"RoleMethod"
+  }
+  ]
+)
+
+9)
+db.userToProduct.update({ _id:114},{$push:{product: 'si-erp-SAP'}});
 
